@@ -1,24 +1,24 @@
 {
-  "user_input": "tell me a joke",
-  "timestamp": "2025-12-24T16:02:06.813528",
+  "user_input": "tell me scientific facts",
+  "timestamp": "2025-12-24T16:15:08.595446",
   "models": {
     "gpt2": {
       "display_name": "GPT-2",
       "temperature_results": {
         "0.3": {
           "temperature": 0.3,
-          "generated_text": ", I'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI",
-          "length": 399
+          "generated_text": "the number of people who have been diagnosed with HIV has increased by nearly 30% since the 1990s and is expected to continue increasing over time as more new infections become common (see this blog post ).\nThe CDC's National AIDS Task Force recently released a report on how many Americans now live in countries where there were no effective anti-AIDS programs during that period. The study found an increase in cases from 1999 through 2010 for those living outside Africa: 1 million deaths per year; 2.5 million lives lost each month due primarily or entirely not being protected against disease because of lack thereof—and 3 billion dollars annually spent protecting them all at once!",
+          "length": 687
         },
         "0.7": {
           "temperature": 0.7,
-          "generated_text": ".\n\n\"No,\" he said, \"I'm sorry I'm not getting a joke.\"\n\n\"No,\" I said, \"I'm sorry.\"\n\n\"What did you say?\"\n\n\"I said that I was going to tell you. I'm not going to get a joke.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I",
-          "length": 362
+          "generated_text": "the US government says the earth is rotating around Earth every six hours and that it's about 1/4 of an hour across its surface - but there was a time when this would have been quite possible because we lived in times past as far back to ancient Mesopotamia (see our earlier post ).\nThe other interesting factoid:   The planet has only one \"ice\" on top which allows for ice-free zones . This means at least part or all water vapour could exist underneath even if these were frozen solid rocks , just like what you see below right now with Antarctica! We don't know exactly how much more liquid will be found under such conditions than beneath normal terrestrial layers yet so long thought life seems unlikely until they find something else big enough not make them collapse into dust clouds during their short period within those icy regions ... But from looking up through space too many places may look similar... Maybe I'm mistaken though?",
+          "length": 942
         },
         "1.0": {
           "temperature": 1.0,
-          "generated_text": "about it,\" she replied.\n\n\"You don't understand,\" she said to me. \"What you've been talking about is wrong.\"\n\nIt was the last time I knew of her, I said.\n\nShe was in her bedroom.\n\nAnd she was not looking at me, not trying to understand.\n\nI had been at work this morning, and she hadn't seen me for five minutes.\n\nShe had not asked me to leave.\n\nShe was waiting outside with her boyfriend, her boyfriend and her boyfriend's girlfriend, and then she would leave.\n\nShe would go to the mall, she would go to the office.\n\nThen she would disappear.",
-          "length": 541
+          "generated_text": "the National Institute of Standards and Technology (NIST)   stated in 2007 that some 40 percent(25% total worldwide); the Department for Environment Protection states it will protect a species from drought; an expert panel convened to study climate change has called out carbon dioxide as \"a pollutant\"\nDrought isn't just environmental problem but also human crisis: Global warming is already increasing its impact on our planet , according IWPR's report On Climate Change :",
+          "length": 474
         }
       }
     },
@@ -27,18 +27,18 @@
       "temperature_results": {
         "0.3": {
           "temperature": 0.3,
-          "generated_text": ".”\n\n\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.",
-          "length": 201
+          "generated_text": "iced tea is a very popular drink in the United States and has been used by many Americans for centuries to treat ailments such as diabetes and heart disease.\nThe fact that it's not only available on tap at home but also across all markets makes me wonder if there will be any other way of getting this thing into your house or even outside?",
+          "length": 340
         },
         "0.7": {
           "temperature": 0.7,
-          "generated_text": ".”",
-          "length": 2
+          "generated_text": "urns the book‬ as well as its pages of text:\nIt is a great study and has been published in English (London) with many more examples here on The Conversation!",
+          "length": 157
         },
         "1.0": {
           "temperature": 1.0,
-          "generated_text": "in a funny way and it makes me think it's okay.‡",
-          "length": 48
+          "generated_text": "icky-faced girls don't like the sight of you in a dress and not your actual appearance? But they love getting dressed to compliment each other over time: They want out on their own clothes (and I've put that aside). You know what's cool with this one!\nI had trouble staying up late at night; but when my girlfriend came home it was fun... because she loved eating snacks around her house so well… And maybe we just couldn�t live together again for hours until our new boyfriend said something funny about us all once he arrived…. The girl then mentioned how bad things happened after an hourlong walk or drive — which is quite odd considering there aren‡s much going by without hot dogs here .",
+          "length": 693
         }
       }
     }

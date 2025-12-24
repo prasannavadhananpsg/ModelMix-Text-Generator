@@ -9,24 +9,24 @@ from datetime import datetime
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, AutoModelForCausalLM, AutoTokenizer
 import torch
 
-# Model configurations
 MODELS = {
     "gpt2": {
         "model_name": "gpt2",
-        "display_name": "GPT-2"
+        "display_name": "GPT-2",
+        "use_instruction_format": True
     },
     "distilgpt2": {
         "model_name": "distilgpt2",
-        "display_name": "DistilGPT-2"
+        "display_name": "DistilGPT-2",
+        "use_instruction_format": True
     }
 }
 
-# Temperature values to test
 TEMPERATURES = [0.3, 0.7, 1.0]
 
-# Default generation parameters
-MAX_LENGTH = 150
+MAX_NEW_TOKENS = 200
 NUM_RETURN_SEQUENCES = 1
+REPETITION_PENALTY = 1.2
 
 
 def load_model(model_key):
@@ -38,11 +38,9 @@ def load_model(model_key):
         tokenizer = AutoTokenizer.from_pretrained(config["model_name"])
         model = AutoModelForCausalLM.from_pretrained(config["model_name"])
         
-        # Set pad token if not present
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         
-        # Set model to evaluation mode
         model.eval()
         
         print(f"✓ {config['display_name']} loaded successfully")
@@ -52,29 +50,82 @@ def load_model(model_key):
         raise
 
 
-def generate_text(model, tokenizer, prompt, temperature, max_length=MAX_LENGTH):
-    """Generate text using the model with specified temperature."""
-    # Tokenize input
-    inputs = tokenizer.encode(prompt, return_tensors="pt")
+def format_prompt(user_input, use_instruction_format=True):
+    """Format the user input as a better prompt for text generation.
     
-    # Generate text
+    Note: The prompt is reformatted because base language models (like GPT-2) work better
+    with natural text continuations rather than direct questions. This transformation helps
+    achieve more coherent and relevant outputs from instruction-agnostic models.
+    """
+    if use_instruction_format:
+        user_lower = user_input.lower().strip()
+        
+        topic = user_input
+        for phrase in ["tell me", "give me", "what are", "what is", "explain", "describe"]:
+            if phrase in user_lower:
+                topic = user_input.lower().replace(phrase, "").strip()
+                topic = topic.replace("?", "").strip()
+                break
+        
+        if "scientific facts" in user_lower or "science" in user_lower:
+            formatted = f"Scientific facts are fascinating. For example, "
+        elif topic:
+            formatted = f"Here are some important facts about {topic}. "
+        else:
+            formatted = f"Here are some facts. "
+    else:
+        formatted = user_input
+    return formatted
+
+
+def generate_text(model, tokenizer, prompt, temperature, max_new_tokens=MAX_NEW_TOKENS, use_instruction_format=True):
+    """Generate text using the model with specified temperature."""
+    formatted_prompt = format_prompt(prompt, use_instruction_format)
+    
+    inputs = tokenizer(
+        formatted_prompt,
+        return_tensors="pt",
+        truncation=True,
+        max_length=512
+    )
+    
+    input_ids = inputs["input_ids"]
+    attention_mask = inputs.get("attention_mask", None)
+    
     with torch.no_grad():
         outputs = model.generate(
-            inputs,
-            max_length=max_length,
+            input_ids,
+            attention_mask=attention_mask,
+            max_new_tokens=max_new_tokens,
             temperature=temperature,
-            do_sample=True,
+            do_sample=True if temperature > 0.1 else False,
             num_return_sequences=NUM_RETURN_SEQUENCES,
             pad_token_id=tokenizer.eos_token_id,
-            top_p=0.9,
-            top_k=50
+            eos_token_id=tokenizer.eos_token_id,
+            repetition_penalty=REPETITION_PENALTY,
+            top_p=0.95 if temperature > 0.5 else 0.9,
+            top_k=50,
+            no_repeat_ngram_size=2,
+            early_stopping=True
         )
     
-    # Decode generated text
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     
-    # Extract only the generated part (remove the prompt)
-    generated_part = generated_text[len(prompt):].strip()
+    if formatted_prompt in generated_text:
+        generated_part = generated_text.split(formatted_prompt, 1)[-1].strip()
+    else:
+        if prompt in generated_text:
+            generated_part = generated_text.split(prompt, 1)[-1].strip()
+        else:
+            generated_part = generated_text.strip()
+    
+    if generated_part and not generated_part.endswith(('.', '!', '?')):
+        last_period = generated_part.rfind('.')
+        last_exclamation = generated_part.rfind('!')
+        last_question = generated_part.rfind('?')
+        last_sentence_end = max(last_period, last_exclamation, last_question)
+        if last_sentence_end > len(generated_part) * 0.5:
+            generated_part = generated_part[:last_sentence_end + 1]
     
     return generated_part
 
@@ -87,7 +138,6 @@ def run_generation(user_input):
         "models": {}
     }
     
-    # Load all models
     loaded_models = {}
     for model_key in MODELS.keys():
         try:
@@ -95,7 +145,8 @@ def run_generation(user_input):
             loaded_models[model_key] = {
                 "model": model,
                 "tokenizer": tokenizer,
-                "display_name": display_name
+                "display_name": display_name,
+                "use_instruction_format": MODELS[model_key].get("use_instruction_format", True)
             }
         except Exception as e:
             print(f"Failed to load {model_key}: {str(e)}")
@@ -105,11 +156,11 @@ def run_generation(user_input):
         print("No models were loaded successfully. Exiting.")
         return None
     
-    # Generate text for each model and temperature
     for model_key, model_data in loaded_models.items():
         model = model_data["model"]
         tokenizer = model_data["tokenizer"]
         display_name = model_data["display_name"]
+        use_instruction_format = model_data["use_instruction_format"]
         
         print(f"\n{'='*60}")
         print(f"Generating with {display_name}")
@@ -125,15 +176,27 @@ def run_generation(user_input):
             print("-" * 60)
             
             try:
-                generated_text = generate_text(model, tokenizer, user_input, temp)
+                generated_text = generate_text(
+                    model, 
+                    tokenizer, 
+                    user_input, 
+                    temp,
+                    use_instruction_format=use_instruction_format
+                )
                 results["models"][model_key]["temperature_results"][str(temp)] = {
                     "temperature": temp,
                     "generated_text": generated_text,
                     "length": len(generated_text)
                 }
-                print(f"Generated: {generated_text[:100]}..." if len(generated_text) > 100 else f"Generated: {generated_text}")
+                if generated_text:
+                    display_text = generated_text[:300] + "..." if len(generated_text) > 300 else generated_text
+                    print(f"Generated ({len(generated_text)} chars):\n{display_text}")
+                else:
+                    print("Generated: (empty response)")
             except Exception as e:
                 print(f"Error generating with temperature {temp}: {str(e)}")
+                import traceback
+                traceback.print_exc()
                 results["models"][model_key]["temperature_results"][str(temp)] = {
                     "temperature": temp,
                     "error": str(e)
@@ -168,7 +231,6 @@ def main():
     
     args = parser.parse_args()
     
-    # Get user input
     if args.input:
         user_input = args.input
     else:
@@ -183,14 +245,11 @@ def main():
     print(f"Input: {user_input}")
     print(f"{'='*60}\n")
     
-    # Run generation
     results = run_generation(user_input)
     
     if results:
-        # Save results
         save_to_json(results, args.output)
         
-        # Print summary
         print(f"\n{'='*60}")
         print("Summary")
         print(f"{'='*60}")
