@@ -1,0 +1,46 @@
+{
+  "user_input": "tell me a joke",
+  "timestamp": "2025-12-24T16:02:06.813528",
+  "models": {
+    "gpt2": {
+      "display_name": "GPT-2",
+      "temperature_results": {
+        "0.3": {
+          "temperature": 0.3,
+          "generated_text": ", I'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI'm going to make it up to you.\n\nI",
+          "length": 399
+        },
+        "0.7": {
+          "temperature": 0.7,
+          "generated_text": ".\n\n\"No,\" he said, \"I'm sorry I'm not getting a joke.\"\n\n\"No,\" I said, \"I'm sorry.\"\n\n\"What did you say?\"\n\n\"I said that I was going to tell you. I'm not going to get a joke.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I said, \"I'm sorry.\"\n\n\"I'm sorry,\" I",
+          "length": 362
+        },
+        "1.0": {
+          "temperature": 1.0,
+          "generated_text": "about it,\" she replied.\n\n\"You don't understand,\" she said to me. \"What you've been talking about is wrong.\"\n\nIt was the last time I knew of her, I said.\n\nShe was in her bedroom.\n\nAnd she was not looking at me, not trying to understand.\n\nI had been at work this morning, and she hadn't seen me for five minutes.\n\nShe had not asked me to leave.\n\nShe was waiting outside with her boyfriend, her boyfriend and her boyfriend's girlfriend, and then she would leave.\n\nShe would go to the mall, she would go to the office.\n\nThen she would disappear.",
+          "length": 541
+        }
+      }
+    },
+    "distilgpt2": {
+      "display_name": "DistilGPT-2",
+      "temperature_results": {
+        "0.3": {
+          "temperature": 0.3,
+          "generated_text": ".”\n\n\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.”\n“I’m not a joke.",
+          "length": 201
+        },
+        "0.7": {
+          "temperature": 0.7,
+          "generated_text": ".”",
+          "length": 2
+        },
+        "1.0": {
+          "temperature": 1.0,
+          "generated_text": "in a funny way and it makes me think it's okay.‡",
+          "length": 48
+        }
+      }
+    }
+  }
+}
